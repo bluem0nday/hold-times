@@ -1,0 +1,6 @@
+# Build artifacts — never commit
+*.skill
+.pkg/
+
+# macOS noise
+.DS_Store
