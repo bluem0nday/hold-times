@@ -77,7 +77,7 @@ Claude with a connected Google Calendar. It needs read and write access: list, c
 This is a Claude skill: a folder with a `SKILL.md` inside. Install it wherever your Claude reads skills.
 
 - **Claude Code:** copy the `hold-times` folder into your skills directory, for example `~/.claude/skills/hold-times/` (user-level) or `.claude/skills/hold-times/` inside a project.
-- **Claude desktop app:** add it under Settings > Capabilities. The repo also includes a packaged `hold-times.skill` file you can save directly.
+- **Claude desktop app:** download `hold-times.skill` from the [latest release](https://github.com/bluem0nday/hold-times/releases/latest), then add it under Settings > Capabilities.
 
 Exact paths and menus vary by Claude version, so check your app's skills documentation if either location looks different.
 
