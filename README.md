@@ -2,6 +2,8 @@
 
 A Claude skill that turns "let's find time to talk" into a booked call. It reads your Google Calendar. It places tentative holds around your real commitments. Then it hands back a clean list of times to paste into an email.
 
+When they pick one, tell Claude. That hold becomes the real meeting, and the rest clear off your calendar.
+
 ## What success looks like
 
 Success is speed. The goal is to go from "we should talk about it" to a confirmed date and time, fast. Every default serves that goal. Offer few enough options to decide at a glance. Show each time in the contact's own timezone, so there is no mental math. Make the whole thing answerable in one reply.
