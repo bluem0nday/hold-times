@@ -12,17 +12,17 @@ Success is speed. The goal is to go from "we should talk about it" to a confirme
 
 Proposing times by hand is slow. You scan the week. You dodge conflicts. You convert time zones. You format a clean list. You do it every time.
 
-The hard part is not the typing. It is the judgment. Two decisions carry the skill.
+Automating the typing is easy. The judgment is the part worth building:
 
-**Free vs. Busy, not title-guessing.** A calendar is full of soft reminders that look like commitments. A lunch block. A "water the plants" nudge. A birthday. The skill blocks only around events marked Busy. It treats Free events as open time. This one rule prevents double-booking and phantom conflicts alike. Read the availability field. Never guess from the title.
+**Busy means busy.** A calendar is full of soft reminders that look like commitments. A lunch block. A "water the plants" nudge. A birthday. The skill reads each event's availability field and blocks time around Busy events only. Free events stay open. Titles never get a vote, so a reminder can't eat an afternoon and a real meeting can't slip through under a bland name.
 
-**Holds are real blocks, not notes.** Each proposed time goes on the calendar as a Busy hold. A later scan sees those holds. It will not offer a slot that is already on the table for someone else.
+**Holds block time.** Each proposed slot goes on the calendar as a Busy event. The next scan treats it like any other meeting, so you never offer the same time to two people.
 
 The rest serves the same goal. The 30-minute buffers. The holiday flags. The timezone-first format. All of it gives the other person something they can say yes to in one reply.
 
 ## Why not just send a scheduling link?
 
-Scheduling-link utilities are common and fine. Some even cost money to use. You send a URL. The other person picks a slot. But a link hands the work to the invitee. Now they have to open a page, scan your calendar, and commit. When you are the one asking for time, that work should sit with you.
+Scheduling-link utilities are common and fine. Some even require paid subscriptions to use. You send a URL. The other person picks a slot. But a link hands the work to the invitee. Now they have to open a page, scan your calendar, and commit. When you are the one asking for time, that work should sit with you.
 
 Offering five specific times is just as fast for them. It keeps the effort on your side. And the list always ends with an escape hatch: "Or propose a time that works better for you." No one hits a dead end if none of the options fit.
 
@@ -87,23 +87,23 @@ The Config block at the top of `SKILL.md` is the only part you change, and most 
 
 ## Region
 
-No region setup needed. The skill reads your home timezone from your primary Google Calendar and flags holidays from whatever holiday calendar you subscribe to. It adapts to wherever you are. On first run it confirms the detected zone with you. If that zone is ever wrong, set it in the Config block to override.
+No region setup needed. The skill reads your home timezone from your primary Google Calendar and flags holidays from whatever holiday calendar you subscribe to — US, UK, anywhere. If you don't subscribe to one, the skill says so and skips holiday flagging. Subscribing in Google Calendar turns it on. It adapts to wherever you are. On first run it confirms the detected zone with you. If that zone is ever wrong, set it in the Config block to override.
 
 ## Privacy
 
-Holds and confirmed events are created private. The skill sets visibility on every event it makes and checks that it took. Anyone who shares your calendar sees only "Busy," not the contact's name. Ask to make one public if you want the title visible. Private is the rule; public is the exception.
+Holds and confirmed events are created private. The skill sets visibility on every event it makes and checks that it took. Anyone who shares your calendar sees only "Busy," not the contact's name. Everything defaults to private, unless you ask to make it public.
 
 ## Edge cases handled
 
 - Weekends skipped, unless you ask for one.
-- Federal holidays flagged in the window. The contact may be off.
+- Holidays flagged in the window. The other person may have the day off.
 - All-day OOO or travel: the skill asks before it books that day.
 - Stale holds flagged for cleanup. A stale hold is older than 5 business days with no pick.
 - Existing holds count as Busy, so two people's options never collide.
 
 ## Version
 
-v1.2.1
+v1.3.0
 
 ## License
 

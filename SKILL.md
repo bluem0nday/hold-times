@@ -1,6 +1,6 @@
 ---
 name: hold-times
-description: Finds open calendar slots, creates hold events, and returns paste-ready meeting times in the user's email format. Use whenever the user says "hold times", "hold time for [person]", "find time", "find times", "put holds on my calendar", "give me times for [person]", "send [person] some options", or any request to propose meeting times to a contact. Also trigger when the user says a person picked a slot and unused holds need to be released, or asks to check whether proposed times conflict with their calendar. Trigger even if the request is loose ("hold times next week for Jane") — the skill carries all of the user's scheduling preferences so they never have to re-explain them.
+description: Finds open calendar slots, creates hold events, and returns paste-ready meeting times in the user's email format. Use whenever the user says "hold times", "hold time for [person]", "find time", "find times", "put holds on my calendar", "give me times for [person]", "send [person] some options", or any request to propose meeting times to a contact. Also trigger when the user says a person picked a slot and unused holds need to be released, or asks to check whether proposed times conflict with their calendar. Trigger even if the request is loose ("hold times next week for Dale Cooper") — the skill carries all of the user's scheduling preferences so they never have to re-explain them.
 ---
 
 # Hold Times
@@ -85,8 +85,8 @@ Existing `📌 hold:` events count as Busy. Outstanding holds for one person mus
 1. **Confirm the home zone.** If the Config home timezone is blank, detect it from the primary calendar and confirm once (see Timezone discipline).
 2. **Read the calendar** for the full window before proposing anything (Google Calendar `list_events`). Never propose a time you haven't checked.
 3. **Pick slots** using the defaults and buffer rule above.
-4. **Flag holidays** that fall in the window by checking the user's subscribed holiday calendar (from `list_calendars`). Include the slot if the user asked for that day, but say so. The contact may be off.
-5. **Create the holds.** One `create_event` per slot. Every call must explicitly set: the hold title, Busy availability, the Config hold color, and `visibility: private`. Do not rely on defaults for any of these. Then check the returned event data — if visibility came back missing or not private, fix it with `update_event` before reporting the holds as placed.
+4. **Flag holidays** that fall in the window by checking the user's subscribed holiday calendar (from `list_calendars`). Include the slot if the user asked for that day, but say so. The other person may have the day off. If no holiday calendar is subscribed, say so once — "no holiday calendar found, so holidays won't be flagged" — and keep going. Never guess holidays from memory.
+5. **Create the holds.** One `create_event` per slot. The slots are already chosen, so issue all the create calls in one parallel batch — do not create them one at a time. Every call must explicitly set: the hold title, Busy availability, the Config hold color, and `visibility: private`. Do not rely on defaults for any of these. Then check the returned event data — if visibility came back missing or not private, fix it with `update_event` before reporting the holds as placed.
 6. **Return the paste-ready list** (format below), confirming holds are on the calendar.
 7. **Offer cleanup** when the contact picks (rename, then ask before deleting the rest, per above).
 

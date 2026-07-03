@@ -2,6 +2,16 @@
 
 All notable changes to this skill are documented here. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.3.0] - 2026-07-03
+
+### Added
+- When no holiday calendar is subscribed, the skill now says so once and moves on, instead of silently skipping holiday flagging. It never fills the gap by guessing holidays from memory.
+
+### Changed
+- Holds are created in one parallel batch instead of one at a time, to cut wall-clock time on the slowest step. Speed gain depends on the client; behavior is unchanged.
+- README rewritten in a plainer voice. Holiday wording is region-neutral, the Region section covers users without a holiday calendar, and the Privacy section closes on a single clear rule.
+- Trigger description example renamed from Jane to Dale Cooper to match the README examples.
+
 ## [1.2.1] - 2026-07-03
 
 ### Fixed
