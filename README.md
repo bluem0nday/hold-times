@@ -23,7 +23,7 @@ When they pick one, tell Claude. That hold becomes the real meeting, and the res
 - Places each proposed time as a private, Busy hold, so no slot gets offered twice
 - Returns a paste-ready list in the other person's timezone
 - Turns the picked hold into the real meeting and offers to clear the rest
-- Flags holidays in the window — it respects whatever holiday calendar you subscribe to — and skips weekends unless you ask
+- Flags holidays in the window, respecting whatever holiday calendar you subscribe to (if any), and skips scheduling on weekends unless you ask
 
 ## What success looks like
 
