@@ -108,7 +108,7 @@ The Config block at the top of `SKILL.md` is the only part you change, and most 
 
 ## Region
 
-No region setup needed. The skill reads your home timezone from your primary Google Calendar and flags holidays from whatever holiday calendar you subscribe to — US, UK, anywhere. If you don't subscribe to one, the skill says so and skips holiday flagging. Subscribing in Google Calendar turns it on. It adapts to wherever you are. On first run it confirms the detected zone with you. If that zone is ever wrong, set it in the Config block to override.
+No region setup needed. The skill reads your home timezone from your primary Google Calendar and flags holidays from whatever holiday calendar you subscribe to (US, UK, anywhere). If you don't subscribe to one, the skill says so and skips holiday flagging. Subscribing in Google Calendar turns it on. It adapts to wherever you are. On first run it confirms the detected zone with you. If that zone is ever wrong, set it in the Config block to override.
 
 ## Privacy
 
