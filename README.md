@@ -23,7 +23,7 @@ When they pick one, tell Claude. That hold becomes the real meeting, and the res
 - Places each proposed time as a private, Busy hold, so no slot gets offered twice
 - Returns a paste-ready list in the other person's timezone
 - Turns the picked hold into the real meeting and offers to clear the rest
-- Flags holidays in the window and skips weekends unless you ask
+- Flags holidays in the window — it respects whatever holiday calendar you subscribe to — and skips weekends unless you ask
 
 ## What success looks like
 
@@ -125,7 +125,6 @@ Holds and confirmed events are created private. The skill sets visibility on eve
 ## Limitations
 
 - Google Calendar only. No Outlook or Apple Calendar support.
-- Holiday flagging needs a holiday calendar subscribed in your Google account. Without one, the skill says so and skips the flags.
 
 ## Version
 
