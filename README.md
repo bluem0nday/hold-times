@@ -83,7 +83,7 @@ Exact paths and menus vary by Claude version, so check your app's skills documen
 
 ## Setup
 
-The Config block at the top of `SKILL.md` is the only part you change, and most of it is optional. Home timezone and holidays come from your Google Calendar automatically. Set your working hours, buffer, slot count, colors, and visibility to taste, or leave the defaults.
+The Config block at the top of `SKILL.md` is the only part you change, and most of it is optional. Home timezone and holidays come from your Google Calendar automatically. Set your working hours, buffer, slot count, and colors to taste, or leave the defaults. Holds stay private unless you say otherwise.
 
 ## Region
 
@@ -91,7 +91,7 @@ No region setup needed. The skill reads your home timezone from your primary Goo
 
 ## Privacy
 
-Holds and confirmed events are created private by default. Anyone who shares your calendar sees only "Busy," not the contact's name. Ask to make one public if you want the title visible. Private is the safe default; public is the exception.
+Holds and confirmed events are created private. The skill sets visibility on every event it makes and checks that it took. Anyone who shares your calendar sees only "Busy," not the contact's name. Ask to make one public if you want the title visible. Private is the rule; public is the exception.
 
 ## Edge cases handled
 
@@ -103,7 +103,7 @@ Holds and confirmed events are created private by default. Anyone who shares you
 
 ## Version
 
-v1.2.0
+v1.2.1
 
 ## License
 

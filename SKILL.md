@@ -51,7 +51,7 @@ Edit these to fit your setup. The rest of the skill reads from them. Do not hard
 - **Title:** the Config hold title. Full name, no acronyms or nicknames the user hasn't used themselves.
 - **Availability:** Busy. Holds must block the time so later scans don't double-book against them.
 - **Color:** the Config hold color, so holds are easy to spot and sweep.
-- **Visibility:** the Config hold visibility. Private by default, so anyone who shares the user's calendar sees only "Busy," not who the hold is for.
+- **Visibility:** the Config hold visibility. Private by default, so anyone who shares the user's calendar sees only "Busy," not who the hold is for. Pass `visibility` explicitly in every create call — leaving it out silently falls back to the calendar default, which exposes the contact's name.
 
 ## After the contact commits
 
@@ -86,7 +86,7 @@ Existing `📌 hold:` events count as Busy. Outstanding holds for one person mus
 2. **Read the calendar** for the full window before proposing anything (Google Calendar `list_events`). Never propose a time you haven't checked.
 3. **Pick slots** using the defaults and buffer rule above.
 4. **Flag holidays** that fall in the window by checking the user's subscribed holiday calendar (from `list_calendars`). Include the slot if the user asked for that day, but say so. The contact may be off.
-5. **Create the holds.** One `create_event` per slot with the settings above.
+5. **Create the holds.** One `create_event` per slot. Every call must explicitly set: the hold title, Busy availability, the Config hold color, and `visibility: private`. Do not rely on defaults for any of these. Then check the returned event data — if visibility came back missing or not private, fix it with `update_event` before reporting the holds as placed.
 6. **Return the paste-ready list** (format below), confirming holds are on the calendar.
 7. **Offer cleanup** when the contact picks (rename, then ask before deleting the rest, per above).
 

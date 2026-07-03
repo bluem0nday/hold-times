@@ -2,6 +2,14 @@
 
 All notable changes to this skill are documented here. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.2.1] - 2026-07-03
+
+### Fixed
+- Holds could be created with the calendar's default visibility instead of private, exposing the contact's name to anyone who shares the calendar. Every create call now sets visibility explicitly, and the skill verifies the created event came back private, repairing it if not. Found in fresh-install testing; confirmed against a live calendar.
+
+### Changed
+- README Setup and Privacy sections updated to match: private is enforced and verified, not just a default.
+
 ## [1.2.0] - 2026-07-02
 
 ### Changed
