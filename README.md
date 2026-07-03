@@ -1,8 +1,29 @@
+<div align="center">
+
 # hold-times
 
-A Claude skill that turns "let's find time to talk" into a booked call. It reads your Google Calendar. It places tentative holds around your real commitments. Then it hands back a clean list of times to paste into an email.
+### A Claude skill that turns "let's find time to talk" into a booked call
+
+**From "we should talk" to a confirmed date and time, fast.**
+
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/version-1.3.0-brightgreen.svg)](../../releases/latest)
+[![Claude](https://img.shields.io/badge/Claude-skill-blueviolet.svg)](https://claude.ai)
+[![Google Calendar](https://img.shields.io/badge/Google_Calendar-required-4285F4.svg)](https://calendar.google.com)
+
+</div>
+
+It reads your Google Calendar. It places tentative holds around your real commitments. Then it hands back a clean list of times to paste into an email.
 
 When they pick one, tell Claude. That hold becomes the real meeting, and the rest clear off your calendar.
+
+## What it does
+
+- Reads your calendar and finds open slots around real commitments
+- Places each proposed time as a private, Busy hold, so no slot gets offered twice
+- Returns a paste-ready list in the other person's timezone
+- Turns the picked hold into the real meeting and offers to clear the rest
+- Flags holidays in the window and skips weekends unless you ask
 
 ## What success looks like
 
@@ -101,10 +122,20 @@ Holds and confirmed events are created private. The skill sets visibility on eve
 - Stale holds flagged for cleanup. A stale hold is older than 5 business days with no pick.
 - Existing holds count as Busy, so two people's options never collide.
 
+## Limitations
+
+- Google Calendar only. No Outlook or Apple Calendar support.
+- Holiday flagging needs a holiday calendar subscribed in your Google account. Without one, the skill says so and skips the flags.
+
 ## Version
 
 v1.3.0
 
 ## License
 
-MIT
+MIT License — see [LICENSE](LICENSE) for details.
+
+## Author
+
+**Matt MacQueen** — Product Design Leader, NYC
+[GitHub](https://github.com/bluem0nday) · [LinkedIn](https://www.linkedin.com/in/mattmacqueen/)
