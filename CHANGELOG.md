@@ -2,6 +2,15 @@
 
 All notable changes to this skill are documented here. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.3.1] - 2026-07-04
+
+### Removed
+- The parallel-create instruction from 1.3.0. It shipped without a way to verify it helped, and it could not be proven in practice. Hold creation is back to the plain one-call-per-slot wording.
+
+### Changed
+- Install section now warns off the "Source code" downloads, which unpack to a branch-named folder instead of an installable skill.
+- Cleaned up instruction wording inside the skill. No behavior change.
+
 ## [1.3.0] - 2026-07-03
 
 ### Added

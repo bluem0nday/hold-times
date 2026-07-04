@@ -7,7 +7,7 @@
 **From "we should talk" to a confirmed date and time, fast.**
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.3.0-brightgreen.svg)](../../releases/latest)
+[![Version](https://img.shields.io/badge/version-1.3.1-brightgreen.svg)](../../releases/latest)
 [![Claude](https://img.shields.io/badge/Claude-skill-blueviolet.svg)](https://claude.ai)
 [![Google Calendar](https://img.shields.io/badge/Google_Calendar-required-4285F4.svg)](https://calendar.google.com)
 
@@ -100,6 +100,8 @@ This is a Claude skill: a folder with a `SKILL.md` inside. Install it wherever y
 - **Claude Code:** copy the `hold-times` folder into your skills directory, for example `~/.claude/skills/hold-times/` (user-level) or `.claude/skills/hold-times/` inside a project.
 - **Claude desktop app:** download `hold-times.skill` from the [latest release](https://github.com/bluem0nday/hold-times/releases/latest), then add it under Settings > Capabilities.
 
+Use the `hold-times.skill` file itself. The green Code button and the "Source code" links give you a folder named after the branch (like `hold-times-main`), not an installable skill.
+
 Exact paths and menus vary by Claude version, so check your app's skills documentation if either location looks different.
 
 ## Setup
@@ -128,7 +130,7 @@ Holds and confirmed events are created private. The skill sets visibility on eve
 
 ## Version
 
-v1.3.0
+v1.3.1
 
 ## License
 
