@@ -89,6 +89,27 @@ Wed, 6/10 at 10:00 AM PT (1:00 PM ET)
 Or propose a time that works better for you.
 ```
 
+And when the contact picks a slot, booking is one line. Say "book Dale" or paste his reply:
+
+> book Dale, he picked Monday at 10
+
+Output:
+
+```
+Booked: Mon, 7/6 at 10:00 AM ET — Your Name <> Dale Cooper
+Dale is on the invite with your note in the description. No email has gone out.
+
+Cleared the other holds:
+Fri, 7/3 at 11:00 AM ET
+Mon, 7/6 at 2:30 PM ET
+Tue, 7/7 at 11:30 AM ET
+Tue, 7/7 at 3:00 PM ET
+
+Open the event, add Meet, phone, or a place, and send: [event link]
+```
+
+Behind the scenes that was one event update and four silent deletions. The hold became the real meeting with Dale as an attendee, the leftovers cleared, and nobody got emailed. The send stays yours.
+
 ## Requirements
 
 Claude with a connected Google Calendar. It needs read and write access: list, create, update, and delete events. No calendar, no times. The skill stops and says so. It will not guess.
@@ -108,6 +129,8 @@ Exact paths and menus vary by Claude version, so check your app's skills documen
 
 The Config block at the top of `SKILL.md` is the only part you change, and most of it is optional. Home timezone and holidays come from your Google Calendar automatically. Set your working hours, buffer, slot count, and colors to taste, or leave the defaults. Holds stay private unless you say otherwise.
 
+Two values do need your own words before your first booking: the confirmed-meeting title (your name goes in it) and the invite note that lands in the event description. Both sit in Config as bracketed placeholders until you fill them in.
+
 ## Region
 
 No region setup needed. The skill reads your home timezone from your primary Google Calendar and flags holidays from whatever holiday calendar you subscribe to (US, UK, anywhere). If you don't subscribe to one, the skill says so and skips holiday flagging. Subscribing in Google Calendar turns it on. It adapts to wherever you are. On first run it confirms the detected zone with you. If that zone is ever wrong, set it in the Config block to override.
@@ -115,6 +138,10 @@ No region setup needed. The skill reads your home timezone from your primary Goo
 ## Privacy
 
 Holds and confirmed events are created private. The skill sets visibility on every event it makes and checks that it took. Anyone who shares your calendar sees only "Busy," not the contact's name. Everything defaults to private, unless you ask to make it public.
+
+The skill also never sends email. Booking adds your contact as an attendee, but every calendar write is silent — you review the finished invite and send it yourself.
+
+And your personal details stay yours. The published skill ships bracketed placeholders; your name, phone number, and invite note exist only in the Config of your own copy.
 
 ## Edge cases handled
 
@@ -133,7 +160,7 @@ Holds and confirmed events are created private. The skill sets visibility on eve
 
 ## Version
 
-v1.4.0
+v1.4.0 — full history, including what got removed and why, in the [changelog](CHANGELOG.md).
 
 ## License
 
