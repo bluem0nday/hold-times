@@ -2,6 +2,18 @@
 
 All notable changes to this skill are documented here. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.4.0] - 2026-07-09
+
+### Added
+- Booking flow. When the contact picks a time — "book [Name]", "lock in [Name]", "confirm [Name]", or a pasted reply with their pick — the skill converts the winning hold into a ready-to-send invite in one reply: retitles it to the Config confirmed-meeting title (no meeting medium), adds the contact as an attendee, drops in the Config invite note verbatim, recolors to the confirmed color, and keeps it Busy and private. The invite is never sent by the skill. Every calendar write uses `notificationLevel: NONE`, and the user reviews and sends.
+- Config entries for the confirmed-meeting title and the invite note, so booking reads from Config like everything else.
+- Guard against auto-attached conferencing: after the convert, the skill checks the returned event and strips any Google Meet link the calendar added on its own.
+- The reply hands back the confirmed event's `htmlLink` and states plainly that no invite has gone out yet.
+
+### Changed
+- After a successful booking, the contact's leftover `📌 hold:` events are now deleted automatically and each deletion is listed in the reply. Before 1.4.0 the skill asked first. The auto-delete is tightly scoped: only that contact's own hold placeholders, never another person's holds, never any event with attendees, and nothing at all if the convert failed.
+- The old "After the contact commits" section (rename, then ask before clearing) is replaced by the Booking section. One skill now covers the whole propose, book, and clear lifecycle.
+
 ## [1.3.1] - 2026-07-04
 
 ### Removed

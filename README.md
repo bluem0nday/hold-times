@@ -7,7 +7,7 @@
 **From "we should talk" to a confirmed date and time, fast.**
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.3.1-brightgreen.svg)](../../releases/latest)
+[![Version](https://img.shields.io/badge/version-1.4.0-brightgreen.svg)](../../releases/latest)
 [![Claude](https://img.shields.io/badge/Claude-skill-blueviolet.svg)](https://claude.ai)
 [![Google Calendar](https://img.shields.io/badge/Google_Calendar-required-4285F4.svg)](https://calendar.google.com)
 
@@ -15,14 +15,14 @@
 
 It reads your Google Calendar. It places tentative holds around your real commitments. Then it hands back a clean list of times to paste into an email.
 
-When they pick one, tell Claude. That hold becomes the real meeting, and the rest clear off your calendar.
+When they pick one, tell Claude. That hold becomes a ready-to-send invite with the contact on it and your note in the description, the rest of the holds clear off your calendar, and you get the event link back. Claude never sends the invite. You review it, add the medium (Meet, phone, or a place), and send it yourself.
 
 ## What it does
 
 - Reads your calendar and finds open slots around real commitments
 - Places each proposed time as a private, Busy hold, so no slot gets offered twice
 - Returns a paste-ready list in the other person's timezone
-- Turns the picked hold into the real meeting and offers to clear the rest
+- Books the pick: turns that hold into a ready-to-send invite, clears the other holds, and hands back the event link. It never sends the invite and never emails the contact — every calendar write is silent
 - Flags holidays in the window, respecting whatever holiday calendar you subscribe to (if any), and skips scheduling on weekends unless you ask
 
 ## What success looks like
@@ -67,7 +67,7 @@ Tue, 7/7 at 3:00 PM ET
 Or propose a time that works better for you.
 ```
 
-Behind the scenes it created five Busy `📌 hold: Dale Cooper` events. Each one sits 30 minutes clear of existing commitments, in his daytime hours. When Dale picks one, the skill renames that event to the real meeting, recolors it, and offers to clear the rest.
+Behind the scenes it created five Busy `📌 hold: Dale Cooper` events. Each one sits 30 minutes clear of existing commitments, in his daytime hours. When Dale picks one — say "book Dale" or paste his reply — the skill turns that hold into the confirmed meeting with Dale as an attendee and your invite note in the description, deletes the other four holds (listing each one), and returns the event link. Nothing gets emailed. You open the event, add Meet or a phone number, and hit send.
 
 When the contact is in another timezone, the skill lists their zone first and yours in parentheses. No mental math for either of you.
 
@@ -123,6 +123,9 @@ Holds and confirmed events are created private. The skill sets visibility on eve
 - All-day OOO or travel: the skill asks before it books that day.
 - Stale holds flagged for cleanup. A stale hold is older than 5 business days with no pick.
 - Existing holds count as Busy, so two people's options never collide.
+- A pick with no matching hold never gets guessed at. The skill says what it found and offers to create a fresh confirmed event at the picked time.
+- If Google Calendar auto-attaches a Meet link when the attendee is added, the skill strips it. You choose the medium when you send.
+- Booking cleanup only ever deletes that one contact's own `📌 hold:` events, only after the convert succeeds, and every deletion is listed.
 
 ## Limitations
 
@@ -130,7 +133,7 @@ Holds and confirmed events are created private. The skill sets visibility on eve
 
 ## Version
 
-v1.3.1
+v1.4.0
 
 ## License
 
