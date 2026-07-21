@@ -7,7 +7,7 @@
 **From "we should talk" to a confirmed date and time, fast.**
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.4.0-brightgreen.svg)](../../releases/latest)
+[![Version](https://img.shields.io/badge/version-1.4.1-brightgreen.svg)](../../releases/latest)
 [![Claude](https://img.shields.io/badge/Claude-skill-blueviolet.svg)](https://claude.ai)
 [![Google Calendar](https://img.shields.io/badge/Google_Calendar-required-4285F4.svg)](https://calendar.google.com)
 
@@ -160,7 +160,7 @@ And your personal details stay yours. The published skill ships bracketed placeh
 
 ## Version
 
-v1.4.0 — full history, including what got removed and why, in the [changelog](CHANGELOG.md).
+v1.4.1 — full history, including what got removed and why, in the [changelog](CHANGELOG.md).
 
 ## License
 

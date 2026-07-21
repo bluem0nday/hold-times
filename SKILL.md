@@ -30,6 +30,7 @@ Edit these to fit your setup. The rest of the skill reads from them. Do not hard
 - **Hold color:** Banana (colorId 5)
 - **Confirmed-meeting title:** `[Your Full Name] <> [Their Full Name]`. Put your own name in before first use. No meeting medium in the title — the user adds Google Meet, phone, or a location themselves when they send the invite.
 - **Confirmed-meeting color:** Grape (colorId 3)
+- **Color fallback:** the Calendar API accepts only the 11 classic event colors (Lavender through Tomato). Colors from Google Calendar's newer UI palette — Birch and the rest — cannot be set through the API. When the user asks for one of those, use Lavender (colorId 1) and say so.
 - **Invite note** (goes in the confirmed event's description, verbatim — replace the bracketed parts with your own before first use):
   > Looking forward to catching up. If anything comes up closer to our meeting time, text me anytime at [your mobile number]. Cheers, [your first name]
 - **Hold visibility:** private (calendar-share viewers see only "Busy," not the title). The user can override to public per request.

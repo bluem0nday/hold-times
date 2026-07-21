@@ -2,6 +2,11 @@
 
 All notable changes to this skill are documented here. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.4.1] - 2026-07-21
+
+### Added
+- Color fallback in Config. Google Calendar's web UI has an expanded color palette (Birch and others) that the Calendar API cannot reach — the API accepts only the 11 classic event colors, Lavender through Tomato. When a request names a color outside those 11, the skill now substitutes Lavender (colorId 1) and says so. Before this rule the model improvised its own stand-in.
+
 ## [1.4.0] - 2026-07-09
 
 ### Added
