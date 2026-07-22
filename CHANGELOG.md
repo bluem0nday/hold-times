@@ -8,7 +8,8 @@ All notable changes to this skill are documented here. This project follows [Sem
 - `scripts/make-times-block.sh` — the paste-ready block is now assembled by a bundled script. The opening line, the closing line, and the blank-line spacing are hardcoded in the script, so the frame can no longer be dropped or reworded. The model writes only the slot lines and passes them as arguments.
 
 ### Changed
-- Output format section rewritten around the script: generate the block, paste its output verbatim. Slot-line rules (M/D dates, timezone ordering, no bullets) are unchanged, and the delivered block is byte-identical to 1.4.1's. If the script's output ever lacks the frame, the skill stops and says so instead of patching the block by hand. In a session with no shell, the skill reads the frame lines out of the script file instead of reconstructing them from memory.
+- The opening line now reads "Holding these times for a chat. If one works, I'll send an invite." It said "for a call" through 1.4.1.
+- Output format section rewritten around the script: generate the block, paste its output verbatim. Slot-line rules (M/D dates, timezone ordering, no bullets) are unchanged, and apart from the reworded opener the delivered block matches 1.4.1's. If the script's output ever lacks the frame, the skill stops and says so instead of patching the block by hand. In a session with no shell, the skill reads the frame lines out of the script file instead of reconstructing them from memory.
 
 ## [1.4.1] - 2026-07-21
 

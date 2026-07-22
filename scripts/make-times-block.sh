@@ -8,7 +8,7 @@ if [ "$#" -eq 0 ]; then
   exit 1
 fi
 
-printf "Holding these times for a call. If one works, I'll send an invite.\n\n"
+printf "Holding these times for a chat. If one works, I'll send an invite.\n\n"
 for line in "$@"; do
   printf '%s\n' "$line"
 done

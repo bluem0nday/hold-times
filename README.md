@@ -56,7 +56,7 @@ Input:
 Output:
 
 ```
-Holding these times for a call. If one works, I'll send an invite.
+Holding these times for a chat. If one works, I'll send an invite.
 
 Fri, 7/3 at 11:00 AM ET
 Mon, 7/6 at 10:00 AM ET
@@ -78,7 +78,7 @@ Input:
 Output:
 
 ```
-Holding these times for a call. If one works, I'll send an invite.
+Holding these times for a chat. If one works, I'll send an invite.
 
 Mon, 6/8 at 10:30 AM PT (1:30 PM ET)
 Mon, 6/8 at 12:30 PM PT (3:30 PM ET)
