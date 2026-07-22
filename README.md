@@ -7,7 +7,7 @@
 **From "we should talk" to a confirmed date and time, fast.**
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.4.1-brightgreen.svg)](../../releases/latest)
+[![Version](https://img.shields.io/badge/version-1.5.0-brightgreen.svg)](../../releases/latest)
 [![Claude](https://img.shields.io/badge/Claude-skill-blueviolet.svg)](https://claude.ai)
 [![Google Calendar](https://img.shields.io/badge/Google_Calendar-required-4285F4.svg)](https://calendar.google.com)
 
@@ -116,7 +116,7 @@ Claude with a connected Google Calendar. It needs read and write access: list, c
 
 ## Install
 
-This is a Claude skill: a folder with a `SKILL.md` inside. Install it wherever your Claude reads skills.
+This is a Claude skill: a folder with a `SKILL.md` and a small script inside. Install it wherever your Claude reads skills.
 
 - **Claude Code:** copy the `hold-times` folder into your skills directory, for example `~/.claude/skills/hold-times/` (user-level) or `.claude/skills/hold-times/` inside a project.
 - **Claude desktop app:** download `hold-times.skill` from the [latest release](https://github.com/bluem0nday/hold-times/releases/latest), then add it under Settings > Capabilities.
@@ -160,7 +160,7 @@ And your personal details stay yours. The published skill ships bracketed placeh
 
 ## Version
 
-v1.4.1 — full history, including what got removed and why, in the [changelog](CHANGELOG.md).
+v1.5.0 — full history, including what got removed and why, in the [changelog](CHANGELOG.md).
 
 ## License
 

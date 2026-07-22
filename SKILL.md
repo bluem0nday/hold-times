@@ -107,32 +107,20 @@ Existing `📌 hold:` events count as Busy. Outstanding holds for one person mus
 
 ## Output format
 
-One line per slot, in a code block so it copies clean. No bullets, no bold, no day-grouping. Always open with the holding line and end with the closing line.
+Never hand-compose the paste block. Build the slot lines, then generate the block by running the bundled script — its output is the deliverable, pasted verbatim into a code block so it copies clean. The opening line, the closing line, and the blank-line spacing live only in the script, so the frame cannot be dropped.
 
-Dates use numeric month/day (M/D, no leading zeros), keeping the weekday abbreviation in title case (Mon, Tue, Wed). So: `Fri, 7/3 at 11:00 AM ET`.
+Slot-line rules (these are the only parts the model writes):
 
-**Contact in home timezone (example: Dale Cooper, ET):**
-```
-Holding these times for a call. If one works, I'll send an invite.
+- Dates use numeric month/day (M/D, no leading zeros), keeping the weekday abbreviation in title case (Mon, Tue, Wed). So: `Fri, 7/3 at 11:00 AM ET`.
+- Contact in the home timezone (or unknown): home timezone only — `Fri, 7/3 at 11:00 AM ET`
+- Contact in another timezone: their zone first, home zone second — `Mon, 6/8 at 10:30 AM PT (1:30 PM ET)`
+- No bullets, no bold, no day-grouping.
 
-Fri, 7/3 at 11:00 AM ET
-Mon, 7/6 at 10:00 AM ET
-Mon, 7/6 at 2:30 PM ET
-Tue, 7/7 at 11:30 AM ET
-Tue, 7/7 at 3:00 PM ET
+Generate the block with the script at `scripts/make-times-block.sh` inside this skill's base directory. Call it through `bash` with the full path quoted (installed paths can contain spaces), one argument per slot line, in order. Do not depend on the working directory or on the script's executable bit:
 
-Or propose a time that works better for you.
-```
+    bash "<skill base directory>/scripts/make-times-block.sh" \
+      "Mon, 6/8 at 10:30 AM PT (1:30 PM ET)" \
+      "Tue, 6/9 at 9:00 AM PT (12:00 PM ET)" \
+      "Wed, 6/10 at 10:00 AM PT (1:00 PM ET)"
 
-**Contact in another timezone, their zone first (example: Audrey Horne, PT):**
-```
-Holding these times for a call. If one works, I'll send an invite.
-
-Mon, 6/8 at 10:30 AM PT (1:30 PM ET)
-Mon, 6/8 at 12:30 PM PT (3:30 PM ET)
-Tue, 6/9 at 9:00 AM PT (12:00 PM ET)
-Tue, 6/9 at 1:00 PM PT (4:00 PM ET)
-Wed, 6/10 at 10:00 AM PT (1:00 PM ET)
-
-Or propose a time that works better for you.
-```
+Paste the script's output exactly as returned. If the output doesn't open with the holding line and end with the proposal line, the script is broken — stop and say so rather than patching the block by hand. If the session has no shell to run the script, read the script file and copy the frame lines from it verbatim instead of reconstructing them from memory.
