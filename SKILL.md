@@ -31,8 +31,15 @@ Edit these to fit your setup. The rest of the skill reads from them. Do not hard
 - **Confirmed-meeting title:** `[Your Full Name] <> [Their Full Name]`. Put your own name in before first use. No meeting medium in the title — the user adds Google Meet, phone, or a location themselves when they send the invite.
 - **Confirmed-meeting color:** Grape (colorId 3)
 - **Color fallback:** the Calendar API accepts only the 11 classic event colors (Lavender through Tomato). Colors from Google Calendar's newer UI palette — Birch and the rest — cannot be set through the API. When the user asks for one of those, use Lavender (colorId 1) and say so.
-- **Invite note** (goes in the confirmed event's description, verbatim — replace the bracketed parts with your own before first use):
-  > Looking forward to catching up. If anything comes up closer to our meeting time, text me anytime at [your mobile number]. Cheers, [your first name]
+- **Invite note** — goes in the confirmed event's description. Replace the bracketed parts with your own before first use. The description field accepts HTML, so pass this string exactly as written: the `<br>` tags carry the line breaks and the anchor makes your site a real clickable link. Do not flatten it to plain text and do not paste a bare URL.
+
+      Looking forward to our conversation. If anything comes up, text me anytime [your mobile number].<br>Cheers<br>[your first name]<br><a href="https://[your-site]">[your-site]</a>
+
+  Rendered, the guest sees:
+  > Looking forward to our conversation. If anything comes up, text me anytime [your mobile number].
+  > Cheers
+  > [your first name]
+  > [your-site] (as a link)
 - **Hold visibility:** private (calendar-share viewers see only "Busy," not the title). The user can override to public per request.
 
 **Region note:** home timezone and holidays are read from your Google Calendar, so the skill adapts to your region on its own. Nothing is hardcoded to the US. Override the home timezone in Config only if the calendar's zone is wrong for you.
@@ -80,6 +87,8 @@ Trigger: the user says "book times", "book [Name]", "lock in [Name]", "confirm [
 A hold must start and end at least the Config buffer away from any event marked Busy. Events marked Free (transparent availability) do not block. The user's recurring lunch block and reminder-style events are Free on purpose. Read the event's availability field. Do not guess from the title.
 
 Why: back-to-back calls wreck their day, but their calendar is full of soft reminders that look like commitments and aren't.
+
+When talking to the user about availability, use calendar UI vocabulary, not API terms: say "Free/Busy", never "transparent/opaque".
 
 Existing `📌 hold:` events count as Busy. Outstanding holds for one person must not collide with holds for another.
 

@@ -7,7 +7,7 @@
 **From "we should talk" to a confirmed date and time, fast.**
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.5.0-brightgreen.svg)](../../releases/latest)
+[![Version](https://img.shields.io/badge/version-1.5.1-brightgreen.svg)](../../releases/latest)
 [![Claude](https://img.shields.io/badge/Claude-skill-blueviolet.svg)](https://claude.ai)
 [![Google Calendar](https://img.shields.io/badge/Google_Calendar-required-4285F4.svg)](https://calendar.google.com)
 
@@ -129,7 +129,7 @@ Exact paths and menus vary by Claude version, so check your app's skills documen
 
 The Config block at the top of `SKILL.md` is the only part you change, and most of it is optional. Home timezone and holidays come from your Google Calendar automatically. Set your working hours, buffer, slot count, and colors to taste, or leave the defaults. Holds stay private unless you say otherwise.
 
-Two values do need your own words before your first booking: the confirmed-meeting title (your name goes in it) and the invite note that lands in the event description. Both sit in Config as bracketed placeholders until you fill them in.
+Two values do need your own words before your first booking: the confirmed-meeting title (your name goes in it) and the invite note that lands in the event description. Both sit in Config as bracketed placeholders until you fill them in. The note is written as HTML, because that is how Google Calendar renders a description, so line breaks and a link to your own site both survive the trip.
 
 ## Region
 
@@ -160,7 +160,7 @@ And your personal details stay yours. The published skill ships bracketed placeh
 
 ## Version
 
-v1.5.0 — full history, including what got removed and why, in the [changelog](CHANGELOG.md).
+v1.5.1 — full history, including what got removed and why, in the [changelog](CHANGELOG.md).
 
 ## License
 

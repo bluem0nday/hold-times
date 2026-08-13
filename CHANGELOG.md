@@ -2,6 +2,14 @@
 
 All notable changes to this skill are documented here. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.5.1] - 2026-08-13
+
+### Fixed
+- The Config invite note is now specified as an HTML string. Google Calendar renders the description field as HTML, so the old single-line note arrived flattened and could not carry a link. The Config entry now shows the `<br>` tags that hold the line breaks and the anchor that makes your site clickable, shows what the guest sees once it renders, and tells the skill to pass the string through exactly as written rather than flattening it or dropping in a bare URL. Your own number, sign-off, and site stay bracketed placeholders until you fill them in.
+
+### Added
+- Buffer-rule section now states the user-facing vocabulary rule for reporting availability: say "Free/Busy", never "transparent/opaque".
+
 ## [1.5.0] - 2026-07-22
 
 ### Added
