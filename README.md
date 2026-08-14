@@ -26,7 +26,7 @@ When the contact selects a time, tell Claude. The skill changes that hold into a
 - It does not send the invite, and it does not send email to the contact. Each calendar write is silent.
 - It flags the holidays in the window, and it does not schedule the weekends, unless you ask.
 
-## The goal
+## What success looks like
 
 The goal is speed. The skill changes "we should talk" into a confirmed date and time quickly. It offers a small number of times, so the contact can decide quickly. It shows each time in the timezone of the contact. The contact does not convert times, and can answer with one short reply.
 
@@ -148,7 +148,7 @@ The skill does not send email. A booking adds your contact as an attendee, but e
 
 Your personal data stays with you. The published skill has placeholders in brackets. Your name, your phone number, and your invite note are only in the Config block of your copy.
 
-## Edge cases
+## Edge cases handled
 
 - The skill does not schedule the weekends, unless you ask.
 - It flags the holidays in the window, because the contact can be out of the office.
