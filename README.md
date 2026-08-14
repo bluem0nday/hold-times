@@ -2,9 +2,9 @@
 
 # hold-times
 
-### A Claude skill that changes "let's find time to talk" into a booked call
+### A Claude skill that turns "let's find time to talk" into a booked call
 
-**The skill changes "we should talk" into a confirmed date and time.**
+**From "we should talk" to a confirmed date and time, fast.**
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.5.1-brightgreen.svg)](../../releases/latest)
@@ -13,22 +13,21 @@
 
 </div>
 
-The skill reads your Google Calendar. It creates tentative hold events around your commitments. It then gives you a clean list of times, which you can paste into an email.
+It reads your Google Calendar. It places tentative holds around your real commitments. Then it hands back a clean list of times to paste into an email.
 
-When the contact selects a time, tell Claude. The skill changes that hold into an invite that includes the contact and your note. It deletes the other holds and gives you the event link. Claude does not send the invite. You examine the invite, add Meet, a phone number, or a place, and then send it.
+When they pick one, tell Claude. That hold becomes a ready-to-send invite with the contact on it and your note in the description, the rest of the holds clear off your calendar, and you get the event link back. Claude never sends the invite. You review it, add the medium (Meet, phone, or a place), and send it yourself.
 
 ## What it does
 
-- The skill reads your calendar and finds the open slots around your commitments.
-- It creates each proposed time as a private Busy hold, so it does not offer the same time to two contacts.
-- It gives you a paste-ready list of times in the timezone of the contact.
-- When the contact selects a time, it changes that hold into an invite, deletes the other holds, and gives you the event link.
-- It does not send the invite, and it does not send email to the contact. Each calendar write is silent.
-- It flags the holidays in the window, and it does not schedule the weekends, unless you ask.
+- Reads your calendar and finds open slots around real commitments
+- Places each proposed time as a private, Busy hold, so no slot gets offered twice
+- Returns a paste-ready list in the other person's timezone
+- Books the pick: turns that hold into a ready-to-send invite, clears the other holds, and hands back the event link. It never sends the invite and never emails the contact — every calendar write is silent
+- Flags holidays in the window, respecting whatever holiday calendar you subscribe to (if any), and skips scheduling on weekends unless you ask
 
 ## What success looks like
 
-The goal is speed. The skill changes "we should talk" into a confirmed date and time quickly. It offers a small number of times, so the contact can decide quickly. It shows each time in the timezone of the contact. The contact does not convert times, and can answer with one short reply.
+Success is speed. The goal is to go from "we should talk about it" to a confirmed date and time, fast. Every default serves that goal. Offer few enough options to decide at a glance. Show each time in the contact's own timezone, so there is no mental math. Make the whole thing answerable in one reply.
 
 ## Why it exists
 
@@ -68,11 +67,9 @@ Tue, 7/7 at 3:00 PM ET
 Or propose a time that works better for you.
 ```
 
-The skill creates five Busy `📌 hold: Dale Cooper` events. Each event is 30 minutes away from your other commitments, and is in the daytime hours of the contact.
+Behind the scenes it created five Busy `📌 hold: Dale Cooper` events. Each one sits 30 minutes clear of existing commitments, in his daytime hours. When Dale picks one — say "book Dale" or paste his reply — the skill turns that hold into the confirmed meeting with Dale as an attendee and your invite note in the description, deletes the other four holds (listing each one), and returns the event link. Nothing gets emailed. You open the event, add Meet or a phone number, and hit send.
 
-When Dale selects a time, say "book Dale" or paste his reply. The skill changes that hold into the confirmed meeting, with Dale as an attendee and your note in the description. It deletes the other four holds and lists each deletion. It then gives you the event link. The skill does not send email. You open the event, add Meet or a phone number, and send the invite.
-
-When the contact is in a different timezone, the skill shows the timezone of the contact first, and your timezone in parentheses. You and the contact do not convert times.
+When the contact is in another timezone, the skill lists their zone first and yours in parentheses. No mental math for either of you.
 
 Input:
 
@@ -92,7 +89,7 @@ Wed, 6/10 at 10:00 AM PT (1:00 PM ET)
 Or propose a time that works better for you.
 ```
 
-When the contact selects a time, the booking is one line. Say "book Dale" or paste his reply:
+And when the contact picks a slot, booking is one line. Say "book Dale" or paste his reply:
 
 > book Dale, he picked Monday at 10
 
@@ -111,7 +108,7 @@ Tue, 7/7 at 3:00 PM ET
 Open the event, add Meet, phone, or a place, and send: [event link]
 ```
 
-The booking is one event update and four deletions. The hold became the meeting, and the skill did not send email. You send the invite.
+Behind the scenes that was one event update and four silent deletions. The hold became the real meeting with Dale as an attendee, the leftovers cleared, and nobody got emailed. The send stays yours.
 
 ## Requirements
 
@@ -142,11 +139,11 @@ On the first run, the skill shows the timezone that it found, and asks you to ma
 
 ## Privacy
 
-The skill creates the holds and the confirmed events as private events. It sets the visibility on each event, and then makes sure that the setting is applied. A person who shares your calendar sees only "Busy", and does not see the name of the contact. All events are private, unless you ask for public events.
+Holds and confirmed events are created private. The skill sets visibility on every event it makes and checks that it took. Anyone who shares your calendar sees only "Busy," not the contact's name. Everything defaults to private, unless you ask to make it public.
 
-The skill does not send email. A booking adds your contact as an attendee, but each calendar write is silent. You examine the finished invite and send it.
+The skill also never sends email. Booking adds your contact as an attendee, but every calendar write is silent — you review the finished invite and send it yourself.
 
-Your personal data stays with you. The published skill has placeholders in brackets. Your name, your phone number, and your invite note are only in the Config block of your copy.
+And your personal details stay yours. The published skill ships bracketed placeholders; your name, phone number, and invite note exist only in the Config of your own copy.
 
 ## Edge cases handled
 
@@ -165,11 +162,11 @@ Your personal data stays with you. The published skill has placeholders in brack
 
 ## Version
 
-The current version is v1.5.1. The [changelog](CHANGELOG.md) has the full history. It includes each feature that we removed, and the reason.
+v1.5.1 — full history, including what got removed and why, in the [changelog](CHANGELOG.md).
 
 ## License
 
-MIT License. See the [LICENSE](LICENSE) file for details.
+MIT License — see [LICENSE](LICENSE) for details.
 
 ## Author
 
