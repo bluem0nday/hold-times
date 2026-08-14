@@ -2,9 +2,9 @@
 
 # hold-times
 
-### A Claude skill that turns "let's find time to talk" into a booked call
+### A Claude skill that changes "let's find time to talk" into a booked call
 
-**From "we should talk" to a confirmed date and time, fast.**
+**The skill changes "we should talk" into a confirmed date and time.**
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.5.1-brightgreen.svg)](../../releases/latest)
@@ -13,21 +13,22 @@
 
 </div>
 
-It reads your Google Calendar. It places tentative holds around your real commitments. Then it hands back a clean list of times to paste into an email.
+The skill reads your Google Calendar. It creates tentative hold events around your commitments. It then gives you a clean list of times, which you can paste into an email.
 
-When they pick one, tell Claude. That hold becomes a ready-to-send invite with the contact on it and your note in the description, the rest of the holds clear off your calendar, and you get the event link back. Claude never sends the invite. You review it, add the medium (Meet, phone, or a place), and send it yourself.
+When the contact selects a time, tell Claude. The skill changes that hold into an invite that includes the contact and your note. It deletes the other holds and gives you the event link. Claude does not send the invite. You examine the invite, add Meet, a phone number, or a place, and then send it.
 
 ## What it does
 
-- Reads your calendar and finds open slots around real commitments
-- Places each proposed time as a private, Busy hold, so no slot gets offered twice
-- Returns a paste-ready list in the other person's timezone
-- Books the pick: turns that hold into a ready-to-send invite, clears the other holds, and hands back the event link. It never sends the invite and never emails the contact — every calendar write is silent
-- Flags holidays in the window, respecting whatever holiday calendar you subscribe to (if any), and skips scheduling on weekends unless you ask
+- The skill reads your calendar and finds the open slots around your commitments.
+- It creates each proposed time as a private Busy hold, so it does not offer the same time to two contacts.
+- It gives you a paste-ready list of times in the timezone of the contact.
+- When the contact selects a time, it changes that hold into an invite, deletes the other holds, and gives you the event link.
+- It does not send the invite, and it does not send email to the contact. Each calendar write is silent.
+- It flags the holidays in the window, and it does not schedule the weekends, unless you ask.
 
-## What success looks like
+## The goal
 
-Success is speed. The goal is to go from "we should talk about it" to a confirmed date and time, fast. Every default serves that goal. Offer few enough options to decide at a glance. Show each time in the contact's own timezone, so there is no mental math. Make the whole thing answerable in one reply.
+The goal is speed. The skill changes "we should talk" into a confirmed date and time quickly. It offers a small number of times, so the contact can decide quickly. It shows each time in the timezone of the contact. The contact does not convert times, and can answer with one short reply.
 
 ## Why it exists
 
@@ -67,9 +68,11 @@ Tue, 7/7 at 3:00 PM ET
 Or propose a time that works better for you.
 ```
 
-Behind the scenes it created five Busy `📌 hold: Dale Cooper` events. Each one sits 30 minutes clear of existing commitments, in his daytime hours. When Dale picks one — say "book Dale" or paste his reply — the skill turns that hold into the confirmed meeting with Dale as an attendee and your invite note in the description, deletes the other four holds (listing each one), and returns the event link. Nothing gets emailed. You open the event, add Meet or a phone number, and hit send.
+The skill creates five Busy `📌 hold: Dale Cooper` events. Each event is 30 minutes away from your other commitments, and is in the daytime hours of the contact.
 
-When the contact is in another timezone, the skill lists their zone first and yours in parentheses. No mental math for either of you.
+When Dale selects a time, say "book Dale" or paste his reply. The skill changes that hold into the confirmed meeting, with Dale as an attendee and your note in the description. It deletes the other four holds and lists each deletion. It then gives you the event link. The skill does not send email. You open the event, add Meet or a phone number, and send the invite.
+
+When the contact is in a different timezone, the skill shows the timezone of the contact first, and your timezone in parentheses. You and the contact do not convert times.
 
 Input:
 
@@ -89,7 +92,7 @@ Wed, 6/10 at 10:00 AM PT (1:00 PM ET)
 Or propose a time that works better for you.
 ```
 
-And when the contact picks a slot, booking is one line. Say "book Dale" or paste his reply:
+When the contact selects a time, the booking is one line. Say "book Dale" or paste his reply:
 
 > book Dale, he picked Monday at 10
 
@@ -108,63 +111,65 @@ Tue, 7/7 at 3:00 PM ET
 Open the event, add Meet, phone, or a place, and send: [event link]
 ```
 
-Behind the scenes that was one event update and four silent deletions. The hold became the real meeting with Dale as an attendee, the leftovers cleared, and nobody got emailed. The send stays yours.
+The booking is one event update and four deletions. The hold became the meeting, and the skill did not send email. You send the invite.
 
 ## Requirements
 
-Claude with a connected Google Calendar. It needs read and write access: list, create, update, and delete events. No calendar, no times. The skill stops and says so. It will not guess.
+You need Claude with a connected Google Calendar. The skill needs read and write access: it must list, create, update, and delete events. If no calendar is connected, the skill stops and tells you. It does not guess.
 
 ## Install
 
-This is a Claude skill: a folder with a `SKILL.md` and a small script inside. Install it wherever your Claude reads skills.
+This skill is a folder with a `SKILL.md` file and a small script. Install it where your Claude reads skills.
 
-- **Claude Code:** copy the `hold-times` folder into your skills directory, for example `~/.claude/skills/hold-times/` (user-level) or `.claude/skills/hold-times/` inside a project.
-- **Claude desktop app:** download `hold-times.skill` from the [latest release](https://github.com/bluem0nday/hold-times/releases/latest), then add it under Settings > Capabilities.
+- **Claude Code:** Copy the `hold-times` folder into your skills directory, for example `~/.claude/skills/hold-times/` at the user level, or `.claude/skills/hold-times/` in a project.
+- **Claude desktop app:** Download `hold-times.skill` from the [latest release](https://github.com/bluem0nday/hold-times/releases/latest). Then add it in Settings > Capabilities.
 
-Use the `hold-times.skill` file itself. The green Code button and the "Source code" links give you a folder named after the branch (like `hold-times-main`), not an installable skill.
+Use the `hold-times.skill` file. The green Code button and the "Source code" links give you a folder with the name of the branch, for example `hold-times-main`. That folder is not an installable skill.
 
-Exact paths and menus vary by Claude version, so check your app's skills documentation if either location looks different.
+The exact paths and menus change with the Claude version. If a location looks different, read the skills documentation for your app.
 
 ## Setup
 
-The Config block at the top of `SKILL.md` is the only part you change, and most of it is optional. Home timezone and holidays come from your Google Calendar automatically. Set your working hours, buffer, slot count, and colors to taste, or leave the defaults. Holds stay private unless you say otherwise.
+The Config block at the top of `SKILL.md` is the only part that you change, and most of the block is optional. The skill gets your home timezone and your holidays from your Google Calendar. Set your work hours, buffer, slot count, and colors, or keep the defaults. Holds stay private, unless you change the setting.
 
-Two values do need your own words before your first booking: the confirmed-meeting title (your name goes in it) and the invite note that lands in the event description. Both sit in Config as bracketed placeholders until you fill them in. The note is written as HTML, because that is how Google Calendar renders a description, so line breaks and a link to your own site both survive the trip.
+Two values need your words before your first booking: the title of the confirmed meeting, and the invite note in the event description. The two values are placeholders in brackets in the Config block until you replace them. Write the note as HTML, because Google Calendar shows a description as HTML. Then the line breaks and a link to your site stay correct.
 
 ## Region
 
-No region setup needed. The skill reads your home timezone from your primary Google Calendar and flags holidays from whatever holiday calendar you subscribe to (US, UK, anywhere). If you don't subscribe to one, the skill says so and skips holiday flagging. Subscribing in Google Calendar turns it on. It adapts to wherever you are. On first run it confirms the detected zone with you. If that zone is ever wrong, set it in the Config block to override.
+You do not need region setup. The skill reads your home timezone from your primary Google Calendar. It flags the holidays from the holiday calendar that you subscribe to, for the US, the UK, or a different country. If you do not subscribe to a holiday calendar, the skill tells you, and it does not flag the holidays. To turn on the holiday flags, subscribe to a holiday calendar in Google Calendar.
+
+On the first run, the skill shows the timezone that it found, and asks you to make sure that the timezone is correct. If the timezone is wrong, set the correct timezone in the Config block.
 
 ## Privacy
 
-Holds and confirmed events are created private. The skill sets visibility on every event it makes and checks that it took. Anyone who shares your calendar sees only "Busy," not the contact's name. Everything defaults to private, unless you ask to make it public.
+The skill creates the holds and the confirmed events as private events. It sets the visibility on each event, and then makes sure that the setting is applied. A person who shares your calendar sees only "Busy", and does not see the name of the contact. All events are private, unless you ask for public events.
 
-The skill also never sends email. Booking adds your contact as an attendee, but every calendar write is silent — you review the finished invite and send it yourself.
+The skill does not send email. A booking adds your contact as an attendee, but each calendar write is silent. You examine the finished invite and send it.
 
-And your personal details stay yours. The published skill ships bracketed placeholders; your name, phone number, and invite note exist only in the Config of your own copy.
+Your personal data stays with you. The published skill has placeholders in brackets. Your name, your phone number, and your invite note are only in the Config block of your copy.
 
-## Edge cases handled
+## Edge cases
 
-- Weekends skipped, unless you ask for one.
-- Holidays flagged in the window. The other person may have the day off.
-- All-day OOO or travel: the skill asks before it books that day.
-- Stale holds flagged for cleanup. A stale hold is older than 5 business days with no pick.
-- Existing holds count as Busy, so two people's options never collide.
-- A pick with no matching hold never gets guessed at. The skill says what it found and offers to create a fresh confirmed event at the picked time.
-- If Google Calendar auto-attaches a Meet link when the attendee is added, the skill strips it. You choose the medium when you send.
-- Booking cleanup only ever deletes that one contact's own `📌 hold:` events, only after the convert succeeds, and every deletion is listed.
+- The skill does not schedule the weekends, unless you ask.
+- It flags the holidays in the window, because the contact can be out of the office.
+- If a day has an all-day out-of-office event or a travel event, the skill asks before it books that day.
+- It flags the stale holds for cleanup. A stale hold is more than 5 business days old, with no selected time.
+- Holds on the calendar are Busy events, so the times for two contacts do not collide.
+- If a selected time has no hold, the skill does not guess. It tells you what it found, and it offers to create a confirmed event at the selected time.
+- If Google Calendar attaches a Meet link when the skill adds the attendee, the skill removes the link. You select the medium when you send the invite.
+- The cleanup deletes only the `📌 hold:` events of that one contact. The skill deletes them only after it changes the selected hold into the meeting, and it lists each deletion.
 
 ## Limitations
 
-- Google Calendar only. No Outlook or Apple Calendar support.
+- The skill works with Google Calendar only. It does not work with Outlook or Apple Calendar.
 
 ## Version
 
-v1.5.1 — full history, including what got removed and why, in the [changelog](CHANGELOG.md).
+The current version is v1.5.1. The [changelog](CHANGELOG.md) has the full history. It includes each feature that we removed, and the reason.
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Author
 
