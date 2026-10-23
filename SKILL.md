@@ -4,6 +4,7 @@ description: Finds open calendar slots, creates hold events, and returns paste-r
 ---
 
 # Hold Times
+**Version 1.6.0** | Last updated: October 23, 2026 | See `CHANGELOG.md` for history
 
 Find open calendar slots, place hold events, and hand back paste-ready times for an email. When the contact picks one, book it: the winning hold becomes a ready-to-send invite and the leftover holds clear off the calendar. All of the user's scheduling preferences live here — never make them re-explain them.
 
@@ -15,16 +16,18 @@ This skill needs a connected Google Calendar with read and write access. It call
 
 Edit these to fit your setup. The rest of the skill reads from them. Do not hardcode values in the body.
 
+**Personal values:** if a file named `config.local.md` sits in this skill's folder, read it before anything else. Its values replace the matching lines in this skill. Keep your own name, invite note and other personal setup there, so a copy of this skill that you share or publish never carries them.
+
 - **Home timezone:** auto-detected from your primary Google Calendar. Set a value here only to override (for example `America/New_York`).
 - **Your working hours (home zone):** earliest start 9:00 AM, latest slot ends 5:30 PM. This is when you are available.
 - **Contact working hours (contact's zone):** 8:30 AM to 5:00 PM. Keep every slot inside the overlap of your hours and the contact's hours. A contact west of you gets your late-morning-to-evening; a contact east gets your earlier slots.
 - **Holiday calendar:** whichever holiday calendar you subscribe to in Google Calendar (for example "Holidays in United States"). The skill flags any holiday that lands in the window.
-- **Window:** next 3 business days (auto-extend to day 4, then 5 if needed)
+- **Window:** next 3 business days. If they cannot fit the slots, ask before going further (see The buffer rule).
 - **Weekends:** off unless explicitly asked
 - **Slots per request:** 5 by default (max 3 per day). The user can ask for more or fewer per request.
 - **Slot length:** 30 min
 - **Start times:** :00 or :30 only
-- **Buffer from Busy events:** 30 min
+- **Buffer from Busy events:** 30 min. Holds may touch other holds (see The buffer rule).
 - **Lead time:** nothing sooner than 4 hours after the request
 - **Hold title:** `📌 hold: [Full Name]`
 - **Hold color:** Banana (colorId 5)
@@ -48,7 +51,7 @@ Edit these to fit your setup. The rest of the skill reads from them. Do not hard
 
 ## Defaults (apply unless the user says otherwise)
 
-- **Window:** the next 3 business days. Never Saturday or Sunday unless the user asks for a weekend. If the buffer rule leaves too few clean slots, auto-extend to day 4, then day 5. Keep options within 3–4 days out when possible. Speed to a booked call is the point.
+- **Window:** the next 3 business days. Never Saturday or Sunday unless the user asks for a weekend. If the buffer rule leaves too few clean slots, stop and ask the user (see The buffer rule). Never extend the window on your own. Speed to a booked call is the point.
 - **Count:** use the Config slots-per-request and per-day max. The user can override per request ("give me 3 times" means 3 slots). Honor the per-day max unless the user overrides that too.
 - **Lead time:** use the Config lead time.
 - **Length:** use the Config slot length.
@@ -70,27 +73,33 @@ Trigger: the user says "book times", "book [Name]", "lock in [Name]", "confirm [
 
 1. **Read the pick.** From the pasted reply or the user's instruction, identify the contact and the exact date and time chosen. If the pick is written in the contact's timezone, convert it to the home timezone before searching.
 2. **Find the matching hold.** Search for `📌 hold: [Full Name]` events around that date and match the one whose start equals the picked slot. No match, or holds only at other times: do not guess. Tell the user what was found and offer to create a fresh confirmed event at the picked time instead. Two holds at the same start time: list them and ask which one.
-3. **Get the contact's email** from their person file or the pasted thread. If it isn't available in either place, ask the user. Never invent an address.
+3. **Get the contact's email** from the user's contact notes or the pasted thread. If it isn't available in either place, ask the user. Never invent an address.
 4. **Convert the hold to the confirmed meeting** with a single `update_event`:
    - Title → the Config confirmed-meeting title. Drop the 📌. No medium in the title.
    - Add the contact as an attendee with their email, `responseStatus: needsAction`.
    - Description → the Config invite note, verbatim.
    - Color → the Config confirmed-meeting color. Keep Busy. Keep visibility private.
    - `notificationLevel: NONE` — no email goes out. The skill never sends the invite. The user reviews it and sends it themselves.
+   - Before the update, check the finished title and note. If either still holds a bracketed placeholder such as `[Your Full Name]` or `[your first name]`, stop and ask the user for the wording. Never put a placeholder into an invite.
    - Do not add a Google Meet link. Then check the returned event data: if the calendar auto-attached conferencing (a Google Calendar setting can do this when an attendee is added), strip it with another `update_event` before reporting the booking as done.
 5. **Clear the other holds automatically.** Only after step 4 succeeds, delete every remaining `📌 hold: [Full Name]` event for that contact (`notificationLevel: NONE` on every delete) and list each deletion in the reply by date and time. This is a standing pre-authorized exception to the ask-before-deleting rule, scoped to that one contact's own `📌 hold:` placeholders and nothing else. Never delete an event titled for anyone else, never touch an event that has attendees, and if step 4 failed, delete nothing.
-6. **Hand back the link.** Return the confirmed event's `htmlLink` so the user can open it in one click. State plainly that no invite has been sent yet — the user picks the medium and sends.
-7. **Log it** (when running inside Job Search OS): append a dated entry to the contact's person file and the ops doc with the picked time, the verbatim quote if one was pasted, and a note that the unused holds were released.
+6. **Check the new meeting's buffer.** Holds may touch other holds, so another contact's hold can sit within the Config buffer of the slot just booked. List each one by name, date and time, and ask the user what to do with it. Never move or delete it on your own: that contact may already be counting on the time.
+7. **Hand back the link.** Return the confirmed event's `htmlLink` so the user can open it in one click. State plainly that no invite has been sent yet — the user picks the medium and sends.
+8. **Log it** only when the contact already has a file in the user's contact notes. Add a dated entry there with the picked time, the verbatim quote if one was pasted, and a note that the unused holds were released. If none exists, log nothing, create nothing, and say so in one line.
 
 ## The buffer rule (this is the one the user corrects most)
 
-A hold must start and end at least the Config buffer away from any event marked Busy. Events marked Free (transparent availability) do not block. The user's recurring lunch block and reminder-style events are Free on purpose. Read the event's availability field. Do not guess from the title.
+A hold must start and end at least the Config buffer away from any event marked Busy, with one exception: other `📌 hold:` events (see below). Events marked Free (transparent availability) do not block. The user's recurring lunch block and reminder-style events are Free on purpose. Read the event's availability field. Do not guess from the title.
 
 Why: back-to-back calls wreck their day, but their calendar is full of soft reminders that look like commitments and aren't.
 
 When talking to the user about availability, use calendar UI vocabulary, not API terms: say "Free/Busy", never "transparent/opaque".
 
-Existing `📌 hold:` events count as Busy. Outstanding holds for one person must not collide with holds for another.
+**Holds may touch other holds.** A new hold may start exactly when an existing `📌 hold:` event ends, or end exactly when one starts. Holds never overlap, so a hold for one person never shares time with a hold for another. Why: most holds never get picked, so a gap between two holds only wastes open time.
+
+**Booked meetings keep the full buffer.** Every Busy event that is not a `📌 hold:` keeps the Config buffer on both sides. That includes a confirmed meeting made from a hold.
+
+**When the buffer cannot be kept, ask.** If the window cannot fit the requested slots without cutting into a booked meeting's buffer, stop before placing any hold. Tell the user how many clean slots the window has, and ask what to do: extend the window, offer fewer times, or place a hold inside a buffer. Never extend the window or cut into a buffer on your own. This applies to the default window and to days the user named. Booking has the same check (Booking, step 6).
 
 **All-day events:** marked Free, ignore. Marked Busy (OOO, travel), ask the user before placing holds on that day, and name the conflicting event when delivering results.
 
@@ -108,7 +117,7 @@ Existing `📌 hold:` events count as Busy. Outstanding holds for one person mus
 
 1. **Confirm the home zone.** If the Config home timezone is blank, detect it from the primary calendar and confirm once (see Timezone discipline).
 2. **Read the calendar** for the full window before proposing anything (Google Calendar `list_events`). Never propose a time you haven't checked.
-3. **Pick slots** using the defaults and buffer rule above.
+3. **Pick slots** using the defaults and buffer rule above. If the window falls short, stop and ask before creating anything.
 4. **Flag holidays** that fall in the window by checking the user's subscribed holiday calendar (from `list_calendars`). Include the slot if the user asked for that day, but say so. The other person may have the day off. If no holiday calendar is subscribed, say so once ("no holiday calendar found, so holidays won't be flagged") and keep going. Never guess holidays from memory.
 5. **Create the holds.** One `create_event` per slot. Every call must explicitly set: the hold title, Busy availability, the Config hold color, and `visibility: private`. Do not rely on defaults for any of these. Then check the returned event data. If visibility came back missing or not private, fix it with `update_event` before reporting the holds as placed.
 6. **Return the paste-ready list** (format below), confirming holds are on the calendar.

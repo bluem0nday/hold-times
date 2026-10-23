@@ -2,5 +2,8 @@
 *.skill
 .pkg/
 
+# Personal values: ship only in your own bundle, never commit
+config.local.md
+
 # macOS noise
 .DS_Store

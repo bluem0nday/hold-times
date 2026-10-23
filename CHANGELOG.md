@@ -2,6 +2,21 @@
 
 All notable changes to this skill are documented here. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.6.0] - 2026-10-23
+
+### Changed
+- Holds may now touch other holds. A new hold can start the minute another `📌 hold:` ends, or end the minute one starts. Holds still never overlap. Most proposed times never get picked, so the old 30-minute gap between two holds only threw away open time.
+- Booked meetings keep the full 30-minute buffer on both sides, including a meeting that started as a hold. Before, every hold got the same buffer as a booked meeting.
+- The window no longer auto-extends to day 4 and then day 5. Auto-extending pushed times further out without asking the user.
+- Booking logs only when the contact already has a file in the user's contact notes. Before, it logged every booking, even for a contact with no file there.
+
+### Added
+- When the requested days or count cannot be met without cutting into a booked meeting's buffer, the skill stops and asks the user what to do: extend the window, offer fewer times, or place a hold inside the buffer. It never cuts into a buffer on its own.
+- After a booking, the skill lists any other contact's hold that now sits inside the new meeting's buffer and asks what to do with it. It never moves or deletes that hold, since that contact may already be counting on the time.
+- Optional `config.local.md`. When it sits next to `SKILL.md`, its values replace the matching Config lines, so your name, invite note and other personal setup stay out of any copy you share. Git ignores the file.
+- Booking checks the title and invite note for leftover bracketed placeholders and asks for the wording, instead of putting brackets into an invite.
+- A version header at the top of `SKILL.md`, so a session can report which version it runs and a stale install is easy to spot.
+
 ## [1.5.1] - 2026-08-13
 
 ### Fixed

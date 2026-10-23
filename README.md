@@ -7,7 +7,7 @@
 **From "we should talk" to a confirmed date and time, fast.**
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.5.1-brightgreen.svg)](../../releases/latest)
+[![Version](https://img.shields.io/badge/version-1.6.0-brightgreen.svg)](../../releases/latest)
 [![Claude](https://img.shields.io/badge/Claude-skill-blueviolet.svg)](https://claude.ai)
 [![Google Calendar](https://img.shields.io/badge/Google_Calendar-required-4285F4.svg)](https://calendar.google.com)
 
@@ -37,9 +37,11 @@ Automating the typing is easy. The judgment is the part worth building:
 
 **Busy means busy.** A calendar is full of soft reminders that look like commitments. A lunch block. A "water the plants" nudge. A birthday. The skill reads each event's availability field and blocks time around Busy events only. Free events stay open. Titles never get a vote, so a reminder can't eat an afternoon and a real meeting can't slip through under a bland name.
 
-**Holds block time.** Each proposed slot goes on the calendar as a Busy event. The next scan treats it like any other meeting, so you never offer the same time to two people.
+**Holds block time.** Each proposed slot goes on the calendar as a Busy event. The next scan sees it, so you never offer the same time to two people.
 
-The rest serves the same goal. The 30-minute buffers. The holiday flags. The timezone-first format. All of it gives the other person something they can say yes to in one reply.
+**Holds can sit back to back. Booked meetings get room.** Most proposed times never get picked, so one hold may start the minute another ends. Once a meeting is booked, it keeps 30 minutes clear on each side. When the skill cannot keep that buffer, it asks you what to do. It does not squeeze a time in on its own.
+
+The rest serves the same goal. The 30-minute buffers around booked meetings. The holiday flags. The timezone-first format. All of it gives the other person something they can say yes to in one reply.
 
 ## Why not just send a scheduling link?
 
@@ -131,6 +133,8 @@ The Config block at the top of `SKILL.md` is the only part that you change, and 
 
 Two values need your words before your first booking: the title of the confirmed meeting, and the invite note in the event description. The two values are placeholders in brackets in the Config block until you replace them. Write the note as HTML, because Google Calendar shows a description as HTML. Then the line breaks and a link to your site stay correct.
 
+To keep your name and note out of a copy that you share, put them in a file named `config.local.md` next to `SKILL.md`. Its values replace the matching Config lines. Git ignores this file. If a value still has brackets when you book, the skill asks you for the words. It never puts brackets into an invite.
+
 ## Region
 
 You do not need region setup. The skill reads your home timezone from your primary Google Calendar. It flags the holidays from the holiday calendar that you subscribe to, for the US, the UK, or a different country. If you do not subscribe to a holiday calendar, the skill tells you, and it does not flag the holidays. To turn on the holiday flags, subscribe to a holiday calendar in Google Calendar.
@@ -143,7 +147,7 @@ Holds and confirmed events are created private. The skill sets visibility on eve
 
 The skill also never sends email. Booking adds your contact as an attendee, but every calendar write is silent — you review the finished invite and send it yourself.
 
-And your personal details stay yours. The published skill ships bracketed placeholders; your name, phone number, and invite note exist only in the Config of your own copy.
+And your personal details stay yours. The published skill ships bracketed placeholders; your name, phone number, and invite note exist only in your own copy, in the Config or in `config.local.md`.
 
 ## Edge cases handled
 
@@ -151,7 +155,9 @@ And your personal details stay yours. The published skill ships bracketed placeh
 - It flags the holidays in the window, because the contact can be out of the office.
 - If a day has an all-day out-of-office event or a travel event, the skill asks before it books that day.
 - It flags the stale holds for cleanup. A stale hold is more than 5 business days old, with no selected time.
-- Holds on the calendar are Busy events, so the times for two contacts do not collide.
+- Holds on the calendar are Busy events, so the times for two contacts never overlap. Holds can touch each other. A booked meeting keeps 30 minutes clear on each side.
+- If the window cannot fit the times without cutting into a booked meeting's buffer, the skill asks you what to do: extend the window, offer fewer times, or use the buffer. It does not decide for you.
+- If a booking leaves another contact's hold inside the new meeting's buffer, the skill tells you and asks what to do. It does not move or delete that hold.
 - If a selected time has no hold, the skill does not guess. It tells you what it found, and it offers to create a confirmed event at the selected time.
 - If Google Calendar attaches a Meet link when the skill adds the attendee, the skill removes the link. You select the medium when you send the invite.
 - The cleanup deletes only the `📌 hold:` events of that one contact. The skill deletes them only after it changes the selected hold into the meeting, and it lists each deletion.
@@ -162,7 +168,7 @@ And your personal details stay yours. The published skill ships bracketed placeh
 
 ## Version
 
-v1.5.1 — full history, including what got removed and why, in the [changelog](CHANGELOG.md).
+v1.6.0 — full history, including what got removed and why, in the [changelog](CHANGELOG.md).
 
 ## License
 
