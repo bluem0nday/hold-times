@@ -7,7 +7,7 @@
 **From "we should talk" to a confirmed date and time, fast.**
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.7.0-brightgreen.svg)](../../releases/latest)
+[![Version](https://img.shields.io/badge/version-1.8.0-brightgreen.svg)](../../releases/latest)
 [![Claude](https://img.shields.io/badge/Claude-skill-blueviolet.svg)](https://claude.ai)
 [![Google Calendar](https://img.shields.io/badge/Google_Calendar-required-4285F4.svg)](https://calendar.google.com)
 
@@ -60,8 +60,7 @@ Output:
 ```
 Holding these times for a chat. If one works, I'll send an invite.
 
-Fri, 7/3
-11:00 AM ET
+Fri, 7/3 at 11:00 AM ET
 
 Mon, 7/6
 10:00 AM ET
@@ -74,7 +73,7 @@ Tue, 7/7
 Or propose a time that works better for you.
 ```
 
-The times run in date order, grouped under each day. When every time falls on one day, the list has no day labels and each line carries the day: `Thu, 11/5 at 11:00 AM ET`.
+The times run in date order. A day with two or more times gets a label with its times under it. A day with one time stays on one line: `Fri, 7/3 at 11:00 AM ET`.
 
 Behind the scenes it created five Busy `📌 hold: Dale Cooper` events. Each one sits 30 minutes clear of existing commitments, in his daytime hours. When Dale picks one — say "book Dale" or paste his reply — the skill turns that hold into the confirmed meeting with Dale as an attendee and your invite note in the description, deletes the other four holds (listing each one), and returns the event link. Nothing gets emailed. You open the event, add Meet or a phone number, and hit send.
 
@@ -97,8 +96,7 @@ Tue, 6/9
 9:00 AM PT (12:00 PM ET)
 1:00 PM PT (4:00 PM ET)
 
-Wed, 6/10
-10:00 AM PT (1:00 PM ET)
+Wed, 6/10 at 10:00 AM PT (1:00 PM ET)
 
 Or propose a time that works better for you.
 ```
@@ -180,7 +178,7 @@ And your personal details stay yours. The published skill ships bracketed placeh
 
 ## Version
 
-v1.7.0 — full history, including what got removed and why, in the [changelog](CHANGELOG.md).
+v1.8.0 — full history, including what got removed and why, in the [changelog](CHANGELOG.md).
 
 ## License
 

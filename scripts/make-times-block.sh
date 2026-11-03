@@ -3,10 +3,11 @@
 # The opening and closing lines are hardcoded here on purpose:
 # the model formats slot lines, but it cannot drop the frame.
 #
-# Slots print in date and time order. When they fall on more than
-# one day, each day gets a label line ("Fri, 11/6") and its slots
-# drop the day, with a blank line between days. When they all fall
-# on one day, the lines print as given.
+# Slots print in date and time order. A day with one slot prints on
+# one line as given ("Fri, 11/6 at 1:00 PM ET"). A day with two or
+# more gets a label line ("Fri, 11/6") with its times tucked under,
+# day dropped, and a blank line sets that group off from its
+# neighbors. Back-to-back one-slot days sit together.
 
 if [ "$#" -eq 0 ]; then
   echo "usage: make-times-block.sh 'Fri, 7/24 at 8:30 AM PT (11:30 AM ET)' ..." >&2
@@ -35,13 +36,12 @@ slots=$(printf '%s\n' "$@" | awk '
   }
   END {
     if (bad) exit 1
-    days = 0
     for (i = 1; i <= n; i++) {
       # A window that crosses New Year puts January after December.
       m = month[i]
       if (hi - lo > 6 && m < 7) m += 12
       key[i] = ((m * 32 + date[i]) * 1440 + mins[i]) * 1000 + i
-      if (!(label[i] in seen)) { seen[label[i]] = 1; days++ }
+      count[label[i]]++
     }
     for (i = 1; i <= n; i++) order[i] = i
     for (i = 2; i <= n; i++) {
@@ -53,13 +53,13 @@ slots=$(printf '%s\n' "$@" | awk '
     }
     for (k = 1; k <= n; k++) {
       i = order[k]
-      if (days == 1) { print line[i]; continue }
+      multi = count[label[i]] > 1
       if (label[i] != last) {
-        if (k > 1) print ""
-        print label[i]
-        last = label[i]
+        if (k > 1 && (multi || lastmulti)) print ""
+        if (multi) print label[i]
+        last = label[i]; lastmulti = multi
       }
-      print slot[i]
+      print (multi ? slot[i] : line[i])
     }
   }
 ') || exit 1

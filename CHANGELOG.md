@@ -2,6 +2,14 @@
 
 All notable changes to this skill are documented here. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.8.0] - 2026-11-03
+
+### Changed
+- A day with one time now prints on one line, day included: `Fri, 11/6 at 1:00 PM ET`. Only a day with two or more times gets a label line with its times under it. In 1.7.0 every day got a label once the times spanned two days, so a day with one time took two lines.
+- A blank line sets off each labeled day from the lines around it. One-line days that follow each other sit together with no blank line.
+- Two or more times on a single day now print under that day's label. 1.7.0 printed them as full lines with no label.
+- The model still passes one full slot line per argument, so the call in `SKILL.md` is unchanged.
+
 ## [1.7.0] - 2026-11-03
 
 ### Changed

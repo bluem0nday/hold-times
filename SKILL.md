@@ -4,7 +4,7 @@ description: Finds open calendar slots, creates hold events, and returns paste-r
 ---
 
 # Hold Times
-**Version 1.7.0** | Last updated: November 3, 2026 | See `CHANGELOG.md` for history
+**Version 1.8.0** | Last updated: November 3, 2026 | See `CHANGELOG.md` for history
 
 Find open calendar slots, place hold events, and hand back paste-ready times for an email. When the contact picks one, book it: the winning hold becomes a ready-to-send invite and the leftover holds clear off the calendar. All of the user's scheduling preferences live here — never make them re-explain them.
 
@@ -135,7 +135,7 @@ Slot-line rules (these are the only parts the model writes):
 - Every slot line carries its day, even when several slots share a day.
 - No bullets, no bold. Leave day grouping to the script.
 
-**Day grouping (the script does this):** when the slots fall on more than one day, the script prints each day as a label line (`Mon, 6/8`), then that day's times with the day dropped. A blank line separates one day's group from the next. Days run in date order and times in time order. When every slot falls on one day, the script prints the slot lines as given, with no label.
+**Day grouping (the script does this):** a day with one slot prints on one line, as given: `Tue, 6/9 at 9:00 AM PT (12:00 PM ET)`. A day with two or more slots prints a label line (`Mon, 6/8`), then that day's times with the day dropped. A blank line sets each labeled group off from the lines around it. One-line days that follow each other sit together with no blank line. Days run in date order and times in time order. The same rules hold when every slot falls on one day: two times on one day print under its label.
 
 Generate the block with the script at `scripts/make-times-block.sh` inside this skill's base directory. Call it through `bash` with the full path quoted (installed paths can contain spaces), one argument per slot line. The script sorts them into date and time order. Do not depend on the working directory or on the script's executable bit:
 
@@ -153,11 +153,8 @@ That call returns:
     10:30 AM PT (1:30 PM ET)
     12:30 PM PT (3:30 PM ET)
 
-    Tue, 6/9
-    9:00 AM PT (12:00 PM ET)
-
-    Wed, 6/10
-    10:00 AM PT (1:00 PM ET)
+    Tue, 6/9 at 9:00 AM PT (12:00 PM ET)
+    Wed, 6/10 at 10:00 AM PT (1:00 PM ET)
 
     Or propose a time that works better for you.
 
