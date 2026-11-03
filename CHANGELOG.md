@@ -2,6 +2,16 @@
 
 All notable changes to this skill are documented here. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.7.0] - 2026-11-03
+
+### Changed
+- When the proposed times fall on more than one day, the paste block now groups them by day: a label line such as `Fri, 11/6`, then that day's times with the day dropped. A blank line separates one day's group from the next. Days run in date order and times in time order. A list of seven times across three days got reformatted this way by hand before it went out, so the block now does it.
+- When every time falls on one day, the block is exactly what 1.6.0 printed.
+- `scripts/make-times-block.sh` does the grouping and the sorting. The model still passes one full slot line per argument, day included, so the call in `SKILL.md` is unchanged.
+
+### Added
+- The script rejects a slot line that does not follow the slot-line rules. It prints `not a slot line:` and no block, where 1.6.0 passed the line through. `SKILL.md` tells the model to fix the line and run the script again.
+
 ## [1.6.0] - 2026-10-23
 
 ### Changed

@@ -4,7 +4,7 @@ description: Finds open calendar slots, creates hold events, and returns paste-r
 ---
 
 # Hold Times
-**Version 1.6.0** | Last updated: October 23, 2026 | See `CHANGELOG.md` for history
+**Version 1.7.0** | Last updated: November 3, 2026 | See `CHANGELOG.md` for history
 
 Find open calendar slots, place hold events, and hand back paste-ready times for an email. When the contact picks one, book it: the winning hold becomes a ready-to-send invite and the leftover holds clear off the calendar. All of the user's scheduling preferences live here — never make them re-explain them.
 
@@ -132,13 +132,33 @@ Slot-line rules (these are the only parts the model writes):
 - Dates use numeric month/day (M/D, no leading zeros), keeping the weekday abbreviation in title case (Mon, Tue, Wed). So: `Fri, 7/3 at 11:00 AM ET`.
 - Contact in the home timezone (or unknown): home timezone only — `Fri, 7/3 at 11:00 AM ET`
 - Contact in another timezone: their zone first, home zone second — `Mon, 6/8 at 10:30 AM PT (1:30 PM ET)`
-- No bullets, no bold, no day-grouping.
+- Every slot line carries its day, even when several slots share a day.
+- No bullets, no bold. Leave day grouping to the script.
 
-Generate the block with the script at `scripts/make-times-block.sh` inside this skill's base directory. Call it through `bash` with the full path quoted (installed paths can contain spaces), one argument per slot line, in order. Do not depend on the working directory or on the script's executable bit:
+**Day grouping (the script does this):** when the slots fall on more than one day, the script prints each day as a label line (`Mon, 6/8`), then that day's times with the day dropped. A blank line separates one day's group from the next. Days run in date order and times in time order. When every slot falls on one day, the script prints the slot lines as given, with no label.
+
+Generate the block with the script at `scripts/make-times-block.sh` inside this skill's base directory. Call it through `bash` with the full path quoted (installed paths can contain spaces), one argument per slot line. The script sorts them into date and time order. Do not depend on the working directory or on the script's executable bit:
 
     bash "<skill base directory>/scripts/make-times-block.sh" \
       "Mon, 6/8 at 10:30 AM PT (1:30 PM ET)" \
+      "Mon, 6/8 at 12:30 PM PT (3:30 PM ET)" \
       "Tue, 6/9 at 9:00 AM PT (12:00 PM ET)" \
       "Wed, 6/10 at 10:00 AM PT (1:00 PM ET)"
 
-Paste the script's output exactly as returned. If the output doesn't open with the holding line and end with the proposal line, the script is broken — stop and say so rather than patching the block by hand. If the session has no shell to run the script, read the script file and copy the frame lines from it verbatim instead of reconstructing them from memory.
+That call returns:
+
+    Holding these times for a chat. If one works, I'll send an invite.
+
+    Mon, 6/8
+    10:30 AM PT (1:30 PM ET)
+    12:30 PM PT (3:30 PM ET)
+
+    Tue, 6/9
+    9:00 AM PT (12:00 PM ET)
+
+    Wed, 6/10
+    10:00 AM PT (1:00 PM ET)
+
+    Or propose a time that works better for you.
+
+Paste the script's output exactly as returned. If the script prints `not a slot line:`, it printed no block: rewrite that line to the slot-line rules and run the script again. If the output doesn't open with the holding line and end with the proposal line, the script is broken — stop and say so rather than patching the block by hand. If the session has no shell to run the script, read the script file and copy the frame lines from it verbatim instead of reconstructing them from memory, and lay out the slots by the day-grouping rule above.
